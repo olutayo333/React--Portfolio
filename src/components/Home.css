@@ -1,0 +1,40 @@
+@keyframes example
+		{
+			from{background-color:black; transform: translateX(1300px); } 
+			to{ background-color:white; transform:translateX(0px); }
+		}
+		.example1
+		{
+			width:100px; height:100px; ; 
+			animation-name: example; 
+			animation-duration: 10s; 
+			animation-delay:2s; 
+			animation-iteration-count: infinite;
+			animation-direction: linear; 
+			animation-direction: alternate-reverse;
+			animation-fill-mode: forwards;
+			animation-timing-function: ease-in-out;
+			/*animation direction : normal, reverse, alternate, alternate-reverse*/ 
+			/*animation-fill-mode; animation-timing-function; */
+
+		}
+
+@keyframes aeroplane 
+		{ 	from { transform: translate(100%, 0px );} 
+			to { transform: translate( 0%, 0px);}	
+		}
+
+@keyframes truck
+{
+			from { transform: translate(1450px, 5px); }
+			to { transform: translate(-300px, 5px);}
+}
+
+@keyframes woman 
+		{
+			from { transform: translate(0%, 0px)}
+			to { transform: translate(100%, 0px);}
+		}
+
+
+
