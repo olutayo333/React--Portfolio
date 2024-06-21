@@ -285,8 +285,8 @@ const Home = () => {
         <p className='fs-1 d-flex ms-5 justify-content-start'  style={{borderBottom:"3px solid #646CFF", width:"30vw", letterSpacing:"4px"}} > <b>Recomendations</b> </p> 
         
       <div className='row d-flex mx-auto justify-content-center mb-1 pb-3 bg-dark rounded py-2 px-2' >
-        <div className='col-lg-10 col-6'>
-          <img style={{borderRadius:"20px", width:"50%"}} src="https://res.cloudinary.com/di01u7dxt/image/upload/v1714074473/portfolio%20gif/h2odcoevrlgvqiunp4e7.gif" alt="" />
+        <div className='col-lg-10 col-10'>
+          <img style={{borderRadius:"20px", width:"100%"}} src="https://res.cloudinary.com/di01u7dxt/image/upload/v1714074473/portfolio%20gif/h2odcoevrlgvqiunp4e7.gif" alt="" />
         </div>
       </div>
 
