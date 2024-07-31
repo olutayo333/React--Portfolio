@@ -251,24 +251,24 @@ const Home = () => {
           </div>
 
           <div className='text-center  col-lg-5 col-11 my-1 bg-dark rounded py-3 mx-1'>
-            <Link to='https://olutayo333.github.io/Timer-StopWatch'>
-              <img style={{borderRadius:"20px", width:"100%"}} src="https://res.cloudinary.com/di01u7dxt/image/upload/v1714074544/portfolio%20gif/m6wi0xsrjesujb2brhrq.gif" alt="" />
+            <Link to='https://react-cap-plc-case-study-git-master-olutayo-stephens-projects.vercel.app/'>
+              <img style={{borderRadius:"20px", width:"100%"}} src="https://res.cloudinary.com/di01u7dxt/image/upload/v1722414434/portfolio%20gif/taskManagementSystem.gif" alt="" />
             </Link>
-            <p style={{textAlign:"center"}}> <u> <b>Stop Watch </b></u> </p>
+            <p style={{textAlign:"center"}}> <u> <b>Task Management System </b></u> </p>
             <span>
-                JAVASCRIPT, HTML, CSS - 
-                A StopWatch Application that reads in Seconds, Minutes and Hours. 
+               ReactJS, JAVASCRIPT, HTML, CSS, Nodejs, MongoDB - 
+                A task MAnagement Application for employees to submit thier daily report. 
             </span>
           </div>
 
-          <div className='text-center col-lg-5 col-11 my-1 bg-dark rounded py-3 mx-1'>
-            <Link to='https://olutayo333.github.io/LOCATION-longitude_latitude'>
-              <img style={{borderRadius:"20px", width:"100%"}} src="./images/2.PNG" alt="" />
+          <div className='text-center col-lg-5 col-11 my-1 bg-dark rounded py-3 mx-1' >
+            <Link to='https://vue-lernly-app-eccomerce-updated.vercel.app/'>
+              <img style={{borderRadius:"20px", width:"100%", height:400}} src="https://res.cloudinary.com/di01u7dxt/image/upload/v1722414242/portfolio%20gif/learnify-eccomerce-gif.gif" alt="" />
             </Link>
-            <p style={{textAlign:"center"}}> <u> <b>Location Tracker </b></u> </p>
+            <p style={{textAlign:"center"}}> <u> <b>Merchant Eccomerce App </b></u> </p>
             <span>
-                JAVASCRIPT, HTML, CSS - 
-                An application that automatically fetches location(Lon and Lat) of the device and updates onces the location changes
+                VUEjs, NODEjs, JAVASCRIPT, HTML, CSS, Bootstrap, MongoDB 
+                An Eccomerce Application that allows users to register, login, upload product and edit product.
             </span>
           </div>
 
