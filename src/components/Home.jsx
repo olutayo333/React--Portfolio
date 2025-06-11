@@ -149,7 +149,7 @@ const Home = () => {
               className='btn btn-lg w-100 w-md-75 shadow btn-dark text-center justify-content-center'
             >
               <p className='justify-content-center text-center pt-1 animate__animated animate__flash animate__delay-4s  animate__infinite infinite animate__slower'>
-                <span className='me-5 text-center justify-content-center'><TbViewportShort /></span> <b className='lg:tracking-widest'>View My Resume</b>
+                <span className='me-5 text-center justify-content-center'><IoMdCloudDownload /></span> <b className='lg:tracking-widest'>View My Resume</b>
               </p>
             </button>
           </a>
