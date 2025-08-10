@@ -1,0 +1,79 @@
+name: Auto-generate PR changelog
+on:
+  pull_request_target:
+    types: [opened, reopened, edited, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  gen-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate changelog and update PR body
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+
+            // 1) get commits on PR
+            const { data: commits } = await octokit.rest.pulls.listCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+            });
+
+            // 2) simple Conventional-style parser
+            function parseCommit(message) {
+              const conventional = /^(feat|fix|docs|chore|refactor|perf|test|build|ci|style)(?:\(([^)]+)\))?:\s*(.*)$/i;
+              const m = message.split('\n')[0].match(conventional);
+              if (m) {
+                return { type: m[1].toLowerCase(), scope: m[2] || null, description: m[3] };
+              }
+              return { type: 'other', scope: null, description: message.split('\n')[0] };
+            }
+
+            const buckets = { feat: [], fix: [], docs: [], refactor: [], perf: [], test: [], chore: [], other: [] };
+
+            for (const c of commits) {
+              const parsed = parseCommit(c.commit.message);
+              const shortSha = c.sha.slice(0,7);
+              const entry = `- ${parsed.description} (${shortSha})`;
+              if (buckets[parsed.type]) buckets[parsed.type].push(entry);
+              else buckets.other.push(entry);
+            }
+
+            // 3) build markdown changelog
+            const lines = [];
+            lines.push('## Auto-generated Change Log');
+            if (buckets.feat.length) { lines.push('', '### Features', ...buckets.feat); }
+            if (buckets.fix.length) { lines.push('', '### Fixes', ...buckets.fix); }
+            if (buckets.docs.length) { lines.push('', '### Docs', ...buckets.docs); }
+            if (buckets.refactor.length) { lines.push('', '### Refactors', ...buckets.refactor); }
+            if (buckets.perf.length) { lines.push('', '### Performance', ...buckets.perf); }
+            if (buckets.chore.length) { lines.push('', '### Chores', ...buckets.chore); }
+            if (buckets.other.length) { lines.push('', '### Other changes', ...buckets.other); }
+            const changelog = lines.join('\n\n');
+
+            // 4) replace between markers in PR body (or append)
+            const start = '<!-- AUTO_CHANGELOG_START -->';
+            const end = '<!-- AUTO_CHANGELOG_END -->';
+            const body = context.payload.pull_request.body || '';
+            let newBody;
+            if (body.includes(start) && body.includes(end)) {
+              const re = new RegExp(`${start}[\\s\\S]*?${end}`, 'm');
+              newBody = body.replace(re, `${start}\n${changelog}\n${end}`);
+            } else {
+              newBody = `${body}\n\n${start}\n${changelog}\n${end}`;
+            }
+
+            // 5) update the PR
+            await octokit.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+              body: newBody,
+            });
+
+            console.log('Changelog generated and PR body updated.');
