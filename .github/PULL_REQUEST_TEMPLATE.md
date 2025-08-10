@@ -25,7 +25,7 @@ _No change log yet — the automation will populate this when you open or update
 
 Please confirm the following before requesting a review:
 
-- [ ] I have reviewed the auto-generated change log and updated it if necessary.
+- [ ] I have reviewed the auto-generated change log and updated it necessary.
 - [ ] Code follows the project's coding standards and conventions.
 - [ ] Tests have been added or updated (if applicable).
 - [ ] Documentation has been updated (if applicable).
