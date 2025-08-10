@@ -240,7 +240,7 @@ const Home = () => {
             <br /> responsive web & mobile applications
           </p>
           <a href="/resume.pdf" className="inline-block mt-4 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300">
-            Download Resume
+            View Resume
           </a>
         </div>
 
