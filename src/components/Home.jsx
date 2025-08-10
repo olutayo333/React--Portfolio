@@ -237,7 +237,7 @@ const Home = () => {
         <div className="">
           <p className="text-4xl sm:text-xl font-bold mb-6 leading-tight">
             Building modern,
-            <br /> responsive web & mobile applications
+            <br /> responsive web and mobile applications
           </p>
           <a href="/resume.pdf" className="inline-block mt-4 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300">
             View Resume

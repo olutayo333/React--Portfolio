@@ -1,0 +1,63 @@
+name: Enhanced PR Change Log
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  generate-changelog:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Needed to access full commit history
+
+      - name: Get commit messages
+        id: commits
+        run: |
+          echo "🔍 Collecting commit messages..."
+          git log origin/main..HEAD --pretty=format:"- %s (%an)" > commits.txt
+          echo "COMMIT_LOG<<EOF" >> $GITHUB_ENV
+          cat commits.txt >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Get changed files grouped by type
+        id: changes
+        run: |
+          echo "📁 Grouping changed files..."
+          ADDED=$(git diff --name-status origin/main | grep '^A' | cut -f2)
+          MODIFIED=$(git diff --name-status origin/main | grep '^M' | cut -f2)
+          DELETED=$(git diff --name-status origin/main | grep '^D' | cut -f2)
+
+          echo "CHANGE_LOG<<EOF" >> $GITHUB_ENV
+          echo "### ✨ Added" >> $GITHUB_ENV
+          echo "$ADDED" | sed 's/^/- /' >> $GITHUB_ENV
+          echo "" >> $GITHUB_ENV
+
+          echo "### 🛠️ Modified" >> $GITHUB_ENV
+          echo "$MODIFIED" | sed 's/^/- /' >> $GITHUB_ENV
+          echo "" >> $GITHUB_ENV
+
+          echo "### 🧹 Deleted" >> $GITHUB_ENV
+          echo "$DELETED" | sed 's/^/- /' >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Update PR description
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const changelog = `${process.env.CHANGE_LOG}\n\n### 📝 Commits\n${process.env.COMMIT_LOG}`;
+            const pr = context.payload.pull_request;
+            const updatedBody = pr.body.replace(
+              /<!-- AUTO_CHANGELOG_START -->[\s\S]*<!-- AUTO_CHANGELOG_END -->/,
+              `<!-- AUTO_CHANGELOG_START -->\n${changelog}\n<!-- AUTO_CHANGELOG_END -->`
+            );
+            github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number,
+              body: updatedBody
+            });
